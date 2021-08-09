@@ -33,5 +33,3 @@ terraform apply -auto-approve
 ---
 
 ## Structure
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8f30d353-95ac-4f9e-bccf-4be84f2af02f/Screenshot_from_2021-08-09_22-06-29.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8f30d353-95ac-4f9e-bccf-4be84f2af02f/Screenshot_from_2021-08-09_22-06-29.png)
