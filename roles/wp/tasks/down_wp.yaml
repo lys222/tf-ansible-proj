@@ -1,0 +1,9 @@
+- name: Download Wordpress Archive
+  get_url:
+    url: "{{ wp['src_url'] }}"
+    dest: "{{ wp['src_file'] }}"
+#   checksum: "{{ wp['src_hash'] }}"
+  async: 120
+  poll: 0
+  register: down_result
+

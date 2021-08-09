@@ -1,0 +1,46 @@
+- name: Service Setting in RedHat
+  block:
+    - name: Install MariaDB
+      yum:
+        update_cache: true
+        name: mariadb-client, mariadb-server
+        state: present
+
+    - name: Checking MariaDB is Started
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+- name: DB Setting in RedHat
+  block:
+    - name: Create DB
+      mysql_db:
+        login_unix_socket: "{{ db['socket_path_redhat'] }}"
+        name: "{{ db['database'] }}"
+        state: present
+
+    - name: Create DB User
+      mysql_user:
+        check_implicit_admin: yes
+        login_unix_socket: "{{ db['socket_path_redhat'] }}"
+        name: "{{ db['user'] }}"
+        password: "{{ db['password'] }}"
+        host: localhost
+        priv: "{{ db['database'] }}.*:ALL,GRANT"
+        state: present
+
+- name: Set Bind-Address in RedHat
+  block:
+    - name: Unset bind-address
+      lineinfile:
+        path: "{{ db['conf_file'] }}"
+        regexp: '^bind'
+        line: 'bind-address = 0.0.0.0'
+
+    - name: Unset mysqlx-bind-address
+      lineinfile:
+        path: "{{ db['conf_file'] }}"
+        regexp: '^mysqlx'
+        line: ''
+      notify: MariaDB Service Restart

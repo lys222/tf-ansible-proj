@@ -1,0 +1,20 @@
+db:
+  database: "wpdb"
+  user: "wpuser"
+  password: "1234"
+
+wp:
+  src_ver: "5.8"
+  src_url: "https://wordpress.org/wordpress-{{ wp_ver }}.tar.gz"
+#  src_hash: "sha1:{{ wp['src_url'] }}.sha1"
+  src_file: "/tmp/wordpress-{{ wp_ver }}.tar.gz"
+
+  config_file: "/var/www/html/wordpress/wp-config.php"
+  config_path_redhat: "/etc/httpd/conf/httpd.conf"
+  config_path_debian: "/etc/apache2/ports.conf"
+
+  port_j2_file: "ports.j2"
+  config_j2_file: "wp-config.j2"
+
+wp_ver: "5.8"
+port_num: 8080

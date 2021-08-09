@@ -1,0 +1,10 @@
+- name: Unarchive Wordpress
+  unarchive:
+    src: "{{ wp['src_file'] }}"
+    dest: /var/www/html
+    remote_src: true
+
+- name: Copy & Setting wp-config.php
+  template:
+    src: "{{ wp['config_j2_file'] }}"
+    dest: "{{ wp['config_file'] }}"

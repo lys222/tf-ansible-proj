@@ -1,0 +1,16 @@
+- name: Download Wordpress Archive
+  import_tasks: down_wp.yaml
+
+- name: Service Setting in Debian
+  import_tasks: install/packages_debian.yaml
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Service Setting in RedHat
+  import_tasks: install/packages_redhat.yaml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Sync
+  import_tasks: sync_task.yaml
+
+- name: Wordpress Config in Debian
+  import_tasks: wp-config-edit.yaml

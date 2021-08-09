@@ -1,0 +1,46 @@
+- name: Service Setting in Debian
+  block:
+    - name: Install MySQL
+      apt:
+        update_cache: true
+        name: python3-pymysql, mysql-server
+        state: present
+
+    - name: Checking MySQL Service is Started
+      service:
+        name: mysql
+        state: started
+        enabled: yes
+
+- name: DB Setting in Debian
+  block:
+    - name: Create DB
+      mysql_db:
+        login_unix_socket: "{{ db['socket_path_debian'] }}"
+        name: "{{ db['database'] }}"
+        state: present
+
+    - name: Create DB User
+      mysql_user:
+        check_implicit_admin: yes
+        login_unix_socket: "{{ db['socket_path_debian'] }}"
+        name: "{{ db['user'] }}"
+        password: "{{ db['password'] }}"
+        host: localhost
+        priv: "{{ db['database'] }}.*:ALL,GRANT"
+        state: present
+
+- name: Set Bind-Address in Debian
+  block:
+    - name: Unset bind-address
+      lineinfile:
+        path: "{{ db['conf_file'] }}"
+        regexp: '^bind'
+        line: 'bind-address = 0.0.0.0'
+
+    - name: Unset mysqlx-bind-address
+      lineinfile:
+        path: "{{ db['conf_file'] }}"
+        regexp: '^mysqlx'
+        line: ''
+      notify: Mysql Service Restart

@@ -1,0 +1,17 @@
+- name: DB Configuration
+  hosts: "{{ groups['ungrouped'][0] }}"
+  roles:
+    - db
+
+- name: Wordpress Configuration
+  hosts: "{{ groups['ungrouped'][0] }}"
+  roles:
+    - wp
+
+  post_tasks:
+    - name: Check Web Service
+      uri:
+        url: "http://{{ groups['ungrouped'][0] }}:{{ web_port }}/wordpress"
+        status_code: 200
+        return_content: yes
+      delegate_to: localhost
