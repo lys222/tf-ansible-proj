@@ -33,3 +33,45 @@ terraform apply -auto-approve
 ---
 
 ## Structure
+```
+.
+├── group_vars
+│   └── all.yaml
+├── inventory.ini
+├── local.tf
+├── main.tf
+├── output.tf
+├── provider.tf
+├── remove_all.yaml
+├── roles
+│   ├── db
+│   │   ├── handlers
+│   │   │   └── main.yaml
+│   │   ├── tasks
+│   │   │   ├── db_debian.yaml
+│   │   │   ├── db_redhat.yaml
+│   │   │   └── main.yaml
+│   │   └── vars
+│   │       └── main.yaml
+│   └── wp
+│       ├── handlers
+│       │   └── main.yaml
+│       ├── tasks
+│       │   ├── down_wp.yaml
+│       │   ├── install
+│       │   │   ├── packages_debian.yaml
+│       │   │   └── packages_redhat.yaml
+│       │   ├── main.yaml
+│       │   ├── sync_task.yaml
+│       │   └── wp-config-edit.yaml
+│       ├── templates
+│       │   ├── ports.j2
+│       │   └── wp-config.j2
+│       └── vars
+│           └── main.yaml
+├── security-group.tf
+├── site.yaml
+└── variable.tf
+```
+
+- remove_all.yaml : Remove MySQL & Wordpress
